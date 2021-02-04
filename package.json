@@ -1,0 +1,14 @@
+{
+  "name": "dti-prova-estoque",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \\\"Error: no features specified\\\" && exit 1"
+  },
+  "author": "Gustavo Ferreira <gustavo44083@gmail.com>",
+  "license": "ISC",
+  "workspaces": [
+    "packages/*"
+  ]
+}
