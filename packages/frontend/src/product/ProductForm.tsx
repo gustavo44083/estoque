@@ -38,15 +38,24 @@ class ProductForm extends Component<Props, State> {
           <TextField
             name="title"
             variant="filled"
-            label="Nome"
+            label="Título"
+            data-label="Título"
             defaultValue={product.title}
             required
           />
-          <TextField name="sku" variant="filled" label="SKU" defaultValue={product.sku} required />
+          <TextField
+            name="sku"
+            variant="filled"
+            label="SKU"
+            data-label="SKU"
+            defaultValue={product.sku}
+            required
+          />
           <TextField
             name="stock"
             variant="filled"
             label="Estoque"
+            data-label="Estoque"
             type="number"
             defaultValue={product.stock}
           />

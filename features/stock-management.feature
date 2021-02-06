@@ -12,18 +12,16 @@ Funcionalidade: Gestão de Estoque
       | Notebook   | OH677 | 26      |
       | Mouse      | VK537 | 512     |
 
-  Cenário: Usuário acessa a página inicial
-    Quando acessar a página inicial
-    Então deverá ver todos os produtos cadastrados e seus respectivos estoques
-
+  @test
   Cenario: Usuário registra um novo produto
     Dado que não há um produto de SKU "BJ521" cadastrado
     Quando clicar no botão de adicionar um novo produto
     E preencher os seguintes dados do produto:
       | Título     | SKU   | Estoque |
       | Carregador | BJ521 | 152     |
-    E clicar em concluir
-    Então o produto deve ser cadastrado com sucesso
+    E salvar o produto
+    Então o produto de SKU "BJ521" deve ser cadastrado com sucesso
+    E o usuário deve ver o produto de nome "Carregador" na lista
 
   Cenário: Usuário edita um produto existente
     Dado que o título do produto de SKU "SV425" é "Smartphone"
@@ -35,7 +33,7 @@ Funcionalidade: Gestão de Estoque
     E o estoque do produto de SKU "SV425" deve ser de 512
     
   Cenário: Usuário remove múltiplos produtos
-    Dado que o produto de SKU "WZ659" não foi removido
+    Dado que há um produto de SKU "WZ659" cadastrado
     E que o produto de SKU "OH677" não foi removido
     Quando selecionar o produto de SKU "WZ659"
     E selecionar o produto de SKU "OH677"

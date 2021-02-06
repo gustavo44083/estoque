@@ -1,14 +1,22 @@
-import { Before, BeforeAll } from '@cucumber/cucumber';
-import puppeteer from 'puppeteer/lib/cjs/puppeteer/node-puppeteer-core';
-import { CustomWorld } from './world';
+import { After, AfterAll, Before, BeforeAll, setDefaultTimeout, Status } from '@cucumber/cucumber';
+import { CustomWorld } from "./world";
 
-const browser = await puppeteer.launch();
+setDefaultTimeout(90000)
 
-BeforeAll(async function() {
+BeforeAll(async function () {
 
-  this.page = await this.browser.newPage();
-})
+});
 
 Before(async function(this: CustomWorld) {
-  this.page =
+  await this.init()
+  await this.cleanup()
 })
+
+After(async function(this: CustomWorld, scenario){
+  await this.cleanup()
+  await this.close()
+});
+
+AfterAll(async function(this: CustomWorld) {
+
+});
