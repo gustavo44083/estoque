@@ -11,5 +11,9 @@
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
       "sourceMap": true
-   }
+   },
+   "include": [
+      "features",
+      "node_modules/@types/puppeteer/index.d.ts"
+   ]
 }

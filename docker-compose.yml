@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  backend:
+    image: estoque-back:latest
+    build: './packages/backend'
+    command: bash
+    environment:
+      APP_DATABASE_URL: mysql://root:password@database:3306/estoque
+    links:
+      - database
+    stdin_open: true
+    tty: true
+
+  frontend:
+    image: estoque-front:latest
+    build:
+      context: './packages/frontend'
+      args:
+      - REACT_APP_BACKEND=''
+    command: bash
+    ports:
+    - 8080:80
+    links:
+    - backend
+    stdin_open: true
+    tty: true
+
+  database:
+    image: mariadb:latest
+    environment:
+      MYSQL_DATABASE: estoque
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+    - mysql_data:/var/lib/mysql
+    ports:
+    - 3306:3306
+
+volumes:
+  mysql_data: {}

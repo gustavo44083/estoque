@@ -1,19 +1,26 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Exclude } from 'class-transformer';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @IsString()
   @Column()
   title: string;
 
-  @Column()
+  @IsString()
+  @Column({unique: true})
   sku: string;
 
-  @Column()
+  @IsNumber()
+  @IsOptional()
+  @Column({default: 0})
   stock: number;
 
-  @Column({ default: false })
-  deleted: boolean;
+  @Exclude()
+  @DeleteDateColumn()
+  deletedAt?: Date;
 }
