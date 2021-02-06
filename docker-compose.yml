@@ -4,13 +4,10 @@ services:
   backend:
     image: estoque-back:latest
     build: './packages/backend'
-    command: bash
     environment:
       APP_DATABASE_URL: mysql://root:password@database:3306/estoque
     links:
       - database
-    stdin_open: true
-    tty: true
 
   frontend:
     image: estoque-front:latest
@@ -18,13 +15,10 @@ services:
       context: './packages/frontend'
       args:
       - REACT_APP_BACKEND=''
-    command: bash
     ports:
     - 8080:80
     links:
     - backend
-    stdin_open: true
-    tty: true
 
   database:
     image: mariadb:latest

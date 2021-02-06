@@ -4,7 +4,7 @@ import Product from './interfaces/Product';
 export const ProductProviderContext = React.createContext<ProductProvider | undefined>(undefined);
 
 export default class ProductProvider extends Component<any, any> {
-  endpoint = `${process.env.REACT_APP_BACKEND}/api/v1`;
+  endpoint = `${process.env.REACT_APP_BACKEND || ''}/api/v1`;
 
   async getProducts(page: number, limit: number, search: string = ''): Promise<Product[]> {
     const response = await fetch(
