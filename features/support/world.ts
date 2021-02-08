@@ -8,13 +8,16 @@ import * as mysql from "mysql2";
 
 const defaultParameters = {
   headless: true,
+  browserPath: undefined,
+  browserArgs: [],
   backend: "http://localhost:3000/api/v1",
   frontend: "http://localhost:8080",
   database: "mysql://root:password@localhost:3306/estoque",
+  slowMo: 0,
 };
 
 export class CustomWorld {
-  private parameters: typeof defaultParameters;
+  private readonly parameters: typeof defaultParameters;
   private databaseConnection: Connection;
   browser: Browser;
   page: Page;
@@ -23,12 +26,20 @@ export class CustomWorld {
     this.parameters = { ...defaultParameters, ...parameters };
   }
 
+  getParameter(key: string) {
+    return this.parameters[key];
+  }
+
   async init() {
     await this.close();
     this.databaseConnection = mysql.createConnection(this.parameters.database);
     this.browser = await puppeteer.launch({
       headless: this.parameters.headless,
+      executablePath: this.parameters.browserPath,
+      args: this.parameters.browserArgs,
+      slowMo: this.parameters.slowMo
     });
+
     this.page = await this.browser.newPage();
   }
 
@@ -62,7 +73,16 @@ export class CustomWorld {
   }
 
   async navigateTo(path: string, options?: WaitForOptions) {
-    return this.page.goto(`${this.parameters.frontend}${path}`, options);
+    if (new URL(this.page.url()).pathname !== path) {
+      const url = `${this.parameters.frontend}${path}`;
+      return this.page.goto(url, options);
+    }
+  }
+
+  async takeScreenshot(screenShotName: string) {
+    return this.page.screenshot({
+      path: `${this.getParameter("reportPath")}/error/${screenShotName}.png`,
+    });
   }
 
   async cleanup() {
@@ -70,6 +90,10 @@ export class CustomWorld {
   }
 
   async close() {
+    if (this.databaseConnection) {
+      await new Promise((resolve) => this.databaseConnection.end(resolve));
+    }
+
     if (this.browser) {
       await this.browser.close();
     }

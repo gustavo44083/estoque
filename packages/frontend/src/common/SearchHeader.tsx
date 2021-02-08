@@ -26,7 +26,7 @@ class SearchHeader extends Component<Props, any> {
     const { classes } = this.props;
 
     return (
-      <div className={classes.header}>
+      <div className={classes.header} data-section="Search">
         <SearchBox {...this.props.searchBoxProps} classes={{ root: classes.search }} />
         {this.props.children}
       </div>

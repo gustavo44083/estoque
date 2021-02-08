@@ -69,7 +69,7 @@ class ProductListPage extends Component<Props, State> {
           }}
         >
           {this.state.checked?.size ? (
-            <div className={classes.selectionMenu}>
+            <div className={classes.selectionMenu} data-section="SelectionMenu">
               <Typography variant="subtitle2">{this.state.checked?.size} selecionados</Typography>
               <div className={classes.grow} />
               <IconButton onClick={() => this.handleBatchDelete()}>

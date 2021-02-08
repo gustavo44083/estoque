@@ -1,22 +1,27 @@
-import { After, AfterAll, Before, BeforeAll, setDefaultTimeout, Status } from '@cucumber/cucumber';
+import {
+  After,
+  AfterAll,
+  Before,
+  BeforeAll,
+  setDefaultTimeout,
+  Status,
+} from "@cucumber/cucumber";
 import { CustomWorld } from "./world";
 
-setDefaultTimeout(90000)
+setDefaultTimeout(50000);
 
-BeforeAll(async function () {
-
+Before(async function (this: CustomWorld) {
+  await this.init();
+  await this.cleanup();
 });
 
-Before(async function(this: CustomWorld) {
-  await this.init()
-  await this.cleanup()
-})
+After(async function (this: CustomWorld, scenario) {
+  if (scenario.result.status === Status.FAILED) {
+    const screenShotName = scenario.pickle.name.replace(/[\W_]+/g, "-");
+    await this.takeScreenshot(screenShotName);
+  }
 
-After(async function(this: CustomWorld, scenario){
-  await this.cleanup()
-  await this.close()
+  await this.close();
 });
 
-AfterAll(async function(this: CustomWorld) {
 
-});

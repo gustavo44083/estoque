@@ -4,6 +4,8 @@ services:
   backend:
     image: estoque-back:latest
     build: './packages/backend'
+    ports:
+    - 3000:3000
     environment:
       APP_DATABASE_URL: mysql://root:password@database:3306/estoque
     links:
@@ -14,7 +16,7 @@ services:
     build:
       context: './packages/frontend'
       args:
-      - REACT_APP_BACKEND=''
+        REACT_APP_BACKEND: ''
     ports:
     - 8080:80
     links:

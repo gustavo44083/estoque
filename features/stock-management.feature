@@ -12,7 +12,6 @@ Funcionalidade: Gestão de Estoque
       | Notebook   | OH677 | 26      |
       | Mouse      | VK537 | 512     |
 
-  @test
   Cenario: Usuário registra um novo produto
     Dado que não há um produto de SKU "BJ521" cadastrado
     Quando clicar no botão de adicionar um novo produto
@@ -25,21 +24,18 @@ Funcionalidade: Gestão de Estoque
 
   Cenário: Usuário edita um produto existente
     Dado que o título do produto de SKU "SV425" é "Smartphone"
-    Quando acessar a página inicial
-    E clicar no produto de SKU "SV425"
+    Quando clicar no produto de SKU "SV425"
     E alterar o título para "Smartphone Samsung"
     E alterar o estoque para 512
+    E salvar o produto
     Então o título do produto de SKU "SV425" deve ser "Smartphone Samsung"
     E o estoque do produto de SKU "SV425" deve ser de 512
-    
+
   Cenário: Usuário remove múltiplos produtos
     Dado que há um produto de SKU "WZ659" cadastrado
-    E que o produto de SKU "OH677" não foi removido
+    E que há um produto de SKU "OH677" cadastrado
     Quando selecionar o produto de SKU "WZ659"
     E selecionar o produto de SKU "OH677"
     E clicar no botão de deletar produtos
-    E confirmar a exclusão
     Então o produto de SKU "WZ659" não deve ser mostrado
     E o produto de SKU "OH677" não deve ser mostrado
-
-

@@ -1,0 +1,11 @@
+{
+  "headless": true,
+  "browserPath": "google-chrome-stable",
+  "browserArgs": [
+    "--no-sandbox"
+  ],
+  "backend": "http://backend:3000/api/v1",
+  "frontend": "http://frontend:80",
+  "database": "mysql://root:password@test_database:3306/estoque",
+  "slowMo": 10
+}

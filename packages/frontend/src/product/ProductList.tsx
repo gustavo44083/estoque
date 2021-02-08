@@ -110,7 +110,7 @@ export default class ProductList extends Component<Props, State> {
           loader={<LinearProgress key={'loader'} />}
         >
           {this.state.products.map((product) => (
-            <ListItem button key={product.id}>
+            <ListItem button key={product.id} data-sku={product.sku}>
               <ListItemText
                 key={product.id}
                 primary={product.title}
