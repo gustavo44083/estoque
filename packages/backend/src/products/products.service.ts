@@ -4,6 +4,9 @@ import { FindManyOptions, Like, QueryFailedError, Repository } from 'typeorm';
 import { DuplicatedKeyException } from '../shared/exceptions/duplicated-key.exception';
 import { Product } from './product.entity';
 
+/**
+ * Esta classe é responsável por gerir o cadastro de produtos e os produtos cadastrados.
+ */
 @Injectable()
 export class ProductsService {
   constructor(
@@ -11,6 +14,15 @@ export class ProductsService {
     private productRepository: Repository<Product>
   ) {}
 
+  /**
+   * Lista os produtos cadastrados utilizando os parâmetros de paginação e pesquisa fornecidos.
+   * Não inclui produtos deletados.
+   *
+   * @param page Página atual (começa em 0)
+   * @param limit Limite de produtos retornados
+   * @param search Parâmetro de pesquisa (opcional)
+   * @returns Os produtos encontrados
+   */
   async getProducts(page: number, limit: number, search?: string): Promise<Product[]> {
     const options: FindManyOptions<Product> = {
       order: { id: 'ASC' },
@@ -26,11 +38,27 @@ export class ProductsService {
     return this.productRepository.find(options);
   }
 
-  async getProduct(id: number): Promise<Product | void> {
-    return this.productRepository.findOne(id).catch(this.handleError);
+  /**
+   * Busca um produto por seu ID.
+   *
+   * @param id ID do produto
+   * @returns O produto encontrado, ou `null`
+   */
+  async getProduct(id: number): Promise<Product | null> {
+    try {
+      return this.productRepository.findOne(id);
+    } catch (e) {
+      this.handleError(e);
+    }
   }
 
-  async saveProduct(product: Product): Promise<Product> {
+  /**
+   * Salva um novo produto ou atualiza um existente.
+   *
+   * @param product Produto que será criado ou atualizado
+   * @returns O produto salvo
+   */
+  async saveProduct(product: Partial<Product>): Promise<Product> {
     try {
       return await this.productRepository.save(product);
     } catch (e) {
@@ -38,19 +66,37 @@ export class ProductsService {
     }
   }
 
-  async updateProduct(product: Product): Promise<void> {
+  /**
+   * Atualiza um produto existente.
+   *
+   * @param id ID do produto existente
+   * @param product Novos dados do produto
+   */
+  async updateProduct(id: number, product: Partial<Product>): Promise<void> {
     try {
-      await this.productRepository.update({ id: product.id }, product);
+      await this.productRepository.update({ id }, product);
     } catch (e) {
       this.handleError(e);
     }
   }
 
+  /**
+   * Deleta (soft delete) um produto existente.
+   *
+   * @param id ID do produto
+   * @returns `true` caso o produto foi deletado com sucesso
+   */
   async deleteProduct(id: number): Promise<boolean> {
     const updateResult = await this.productRepository.softDelete(id);
     return updateResult.affected > 0;
   }
 
+  /**
+   * Deleta (soft delete) múltiplos produtos.
+   *
+   * @param ids IDs dos produtos
+   * @returns Quantidade de produtos deletados
+   */
   async deleteMany(ids: number[]): Promise<number> {
     const updateResult = await this.productRepository.softDelete(ids);
     return updateResult.affected;

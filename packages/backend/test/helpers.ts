@@ -16,7 +16,7 @@ export function generateRandomProducts(amount: number) {
       sku: sku,
       title: 'Test Product',
       stock: Math.floor(Math.random() * 1000),
-      deleted: Math.random() < 0.2
+      deletedAt: Math.random() < 0.2 ? new Date() : null
     }));
   }
 

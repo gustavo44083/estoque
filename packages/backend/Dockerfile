@@ -1,5 +1,5 @@
 # Step 1: build
-FROM node:12 AS builder
+FROM node:12 AS build
 
 ENV NODE_ENV build
 
@@ -18,9 +18,9 @@ FROM node:12
 ENV NODE_ENV production
 
 WORKDIR /home/app
-COPY --from=builder /home/app/package.json /home/app/
-COPY --from=builder /home/app/node_modules /home/app/node_modules
-COPY --from=builder /home/app/build /home/app/build
+COPY --from=build /home/app/package.json /home/app/
+COPY --from=build /home/app/node_modules /home/app/node_modules
+COPY --from=build /home/app/build /home/app/build
 
 ENV PORT 3000
 EXPOSE 3000

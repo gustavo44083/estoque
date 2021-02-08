@@ -12,15 +12,19 @@ export class Product {
   title: string;
 
   @IsString()
-  @Column({unique: true})
+  @Column({ unique: true })
   sku: string;
 
   @IsNumber()
   @IsOptional()
-  @Column({default: 0})
-  stock: number;
+  @Column({ default: 0 })
+  stock: number = 0;
 
-  @Exclude()
+  @Exclude({ toPlainOnly: true })
   @DeleteDateColumn()
   deletedAt?: Date;
+
+  constructor(product: Partial<Product>) {
+    Object.assign(this, product);
+  }
 }
