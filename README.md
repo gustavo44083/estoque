@@ -33,7 +33,7 @@ Cada pacote possui testes unitários específicos. Para executá-los, utilize o 
 
 Os testes End-to-End são executados a partir da base do projeto. Siga esses passos para configurar o ambiente:
 1. Instale os pacotes na base do projeto usando `npm install`
-2. Crie o arquivo `e2e-config.json` (use o arquivo `e2e-config.example.json`)
+2. Crie o arquivo `e2e-config.json` (use o arquivo `e2e-config.example.json` como exemplo)
 3. Use o comando `npm test` na base do projeto para iniciar os testes E2E
 
 Também é possível (e recomendado) executar os testes em um ambiente Docker. Para isso, use o comando
