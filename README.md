@@ -37,7 +37,7 @@ Os testes End-to-End são executados a partir da base do projeto. Siga esses pas
 3. Use o comando `npm test` na base do projeto para iniciar os testes E2E
 
 Também é possível (e recomendado) executar os testes em um ambiente Docker. Para isso, use o comando
-`docker-compose -f docker-compose.yml -f docker-compose.test.yml up --build --abort-on-container-exit --exit-code-from puppeteer`
+`npm run test:docker`
 
 ## Licença
 Este projeto é distribuído sob a licença MIT. Consulte o arquivo `LICENSE` para obter mais informações.
