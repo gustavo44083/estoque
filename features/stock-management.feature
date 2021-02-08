@@ -6,18 +6,18 @@ Funcionalidade: Gestão de Estoque
 
   Contexto:
     Dados os seguintes produtos cadastrados:
-      | Título     | SKU   | Estoque |
-      | Smartphone | SV425 | 576     |
-      | Monitor    | WZ659 | 37      |
-      | Notebook   | OH677 | 26      |
-      | Mouse      | VK537 | 512     |
+      | Título     | SKU   | Valor unitário | Estoque |
+      | Smartphone | SV425 | 2000           | 576     |
+      | Monitor    | WZ659 | 2500           | 37      |
+      | Notebook   | OH677 | 3000           | 26      |
+      | Mouse      | VK537 | 150            | 512     |
 
   Cenario: Usuário registra um novo produto
     Dado que não há um produto de SKU "BJ521" cadastrado
     Quando clicar no botão de adicionar um novo produto
     E preencher os seguintes dados do produto:
-      | Título     | SKU   | Estoque |
-      | Carregador | BJ521 | 152     |
+      | Título     | SKU   | Valor unitário | Estoque |
+      | Carregador | BJ521 | 200            | 152     |
     E salvar o produto
     Então o produto de SKU "BJ521" deve ser cadastrado com sucesso
     E o usuário deve ver o produto de nome "Carregador" na lista

@@ -1,4 +1,11 @@
-import { Button, createStyles, TextField, WithStyles, withStyles } from '@material-ui/core';
+import {
+  Button,
+  createStyles,
+  InputAdornment,
+  TextField,
+  WithStyles,
+  withStyles
+} from '@material-ui/core';
 import React, { Component } from 'react';
 import Product from './interfaces/Product';
 
@@ -50,6 +57,21 @@ class ProductForm extends Component<Props, State> {
             data-label="SKU"
             defaultValue={product.sku}
             required
+          />
+          <TextField
+            name="price"
+            variant="filled"
+            label="Valor unitário"
+            data-label="Valor_unitário"
+            defaultValue={product.price}
+            required
+            type="number"
+            InputProps={{
+              startAdornment: <InputAdornment position="start">R$</InputAdornment>,
+              inputProps: {
+                step: '.01'
+              }
+            }}
           />
           <TextField
             name="stock"

@@ -38,7 +38,9 @@ async function findInputByLabel(
   page: Page,
   label: string
 ): Promise<ElementHandle<HTMLInputElement>> {
-  return page.$(`.MuiFormControl-root[data-label=${label}] input`);
+  return page.$(
+    `.MuiFormControl-root[data-label=${label.replace(/ /g, "_")}] input`
+  );
 }
 
 async function clearAndType(
@@ -72,6 +74,7 @@ Given("os seguintes produtos cadastrados:", async function (
       this.request("/products", "POST", {
         title: row["Título"],
         sku: row["SKU"],
+        price: Number(row["Valor unitário"]),
         stock: Number(row["Estoque"]),
       })
     )
@@ -91,8 +94,8 @@ When("clicar no produto de SKU {string}", async function (
   this: CustomWorld,
   sku: string
 ) {
-  await this.navigateTo('/')
-  await clickSku(this.page, sku)
+  await this.navigateTo("/");
+  await clickSku(this.page, sku);
 });
 
 When("clicar no botão de adicionar um novo produto", async function (
@@ -111,10 +114,8 @@ When("preencher os seguintes dados do produto:", async function (
 ) {
   const rawTable = table.raw();
   for (let index in rawTable[0]) {
-    await this.page.type(
-      `.MuiFormControl-root[data-label=${rawTable[0][index]}] input`,
-      rawTable[1][index]
-    );
+    const input = await findInputByLabel(this.page, rawTable[0][index]);
+    await clearAndType(input, rawTable[1][index]);
   }
 });
 
@@ -212,5 +213,6 @@ Then("o produto de SKU {string} não deve ser mostrado", async function (
     "#root > div > div:nth-child(2) > span",
     (element) => element.innerHTML
   );
+
   expect(text).toContain("Nenhum produto");
 });
