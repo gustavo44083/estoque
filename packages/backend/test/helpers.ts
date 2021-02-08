@@ -13,8 +13,9 @@ export function generateRandomProducts(amount: number) {
 
     products.push(plainToClass(Product, {
       id: i,
-      sku: sku,
       title: 'Test Product',
+      sku: sku,
+      price: Math.floor(Math.random() * 100000) / 100,
       stock: Math.floor(Math.random() * 1000),
       deletedAt: Math.random() < 0.2 ? new Date() : null
     }));

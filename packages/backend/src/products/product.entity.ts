@@ -16,6 +16,10 @@ export class Product {
   sku: string;
 
   @IsNumber()
+  @Column({ type: 'double' })
+  price: number;
+
+  @IsNumber()
   @IsOptional()
   @Column({ default: 0 })
   stock: number = 0;

@@ -26,8 +26,6 @@ const feature = [
   "--publish-quiet",
 ].join(" ");
 
-console.log(feature)
-
 module.exports = {
   default: feature,
 };
